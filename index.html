@@ -7,9 +7,9 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.9.1/gsap.min.js"></script>
     <title>SVG Animation</title>
     <link rel="stylesheet" href="style.css" />
-    <script src="script.js" defer></script>
+    <script src="script.js" type="module" defer></script>
   </head>
-  <body>
+  <body class="green">
     <main class="page">
       <section class="background">
         <svg
@@ -151,7 +151,69 @@
           </g>
         </svg>
       </section>
-      <section class="colorSection"></section>
+      <section class="colorSection">
+        <svg
+          id="colorButtonSVG"
+          class="color_button_SVG"
+          viewBox="0 0 900 600"
+          width="100%"
+          height="100%"
+          xmlns="http://www.w3.org/2000/svg"
+          xmlns:xlink="http://www.w3.org/1999/xlink"
+          version="1.1"
+        >
+          <g transform="translate(476.1 276.65)">
+            <path
+              id="colorButton"
+              d="M93.8 11.7C93.8 75 46.9 150 -13.1 150C-73 150 -146 75 -146 11.7C-146 -51.7 -73 -103.3 -13.1 -103.3C46.9 -103.3 93.8 -51.7 93.8 11.7"
+              fill="none"
+              stroke="#eaede860"
+              stroke-width="6"
+              opacity="1"
+            ></path>
+          </g>
+        </svg>
+        <svg
+          id="colorFillSVG"
+          class="color_fill_SVG"
+          viewBox="0 0 900 600"
+          width="100%"
+          height="100%"
+          xmlns="http://www.w3.org/2000/svg"
+          xmlns:xlink="http://www.w3.org/1999/xlink"
+          version="1.1"
+        >
+          <defs>
+            <radialGradient id="colorGradientGreen">
+              <stop offset="70%" stop-color="#B2BBAA" stop-opacity="0.8" />
+              <stop offset="100%" stop-color="#333333" stop-opacity="0" />
+            </radialGradient>
+            <radialGradient id="colorGradientBlue">
+              <stop offset="70%" stop-color="#8B8EA7" stop-opacity="0.8" />
+              <stop offset="100%" stop-color="#414356" stop-opacity="0" />
+            </radialGradient>
+            <radialGradient id="colorGradientRed">
+              <stop offset="70%" stop-color="#9C7C7F" stop-opacity="0.8" />
+              <stop offset="100%" stop-color="#574244" stop-opacity="0" />
+            </radialGradient>
+            <radialGradient id="colorGradientBlack">
+              <stop offset="70%" stop-color="#494949" stop-opacity="0.8" />
+              <stop offset="100%" stop-color="#000000" stop-opacity="0" />
+            </radialGradient>
+          </defs>
+          <g transform="translate(476.1 276.65)">
+            <path
+              id="colorFill"
+              d="M93.8 11.7C93.8 75 46.9 150 -13.1 150C-73 150 -146 75 -146 11.7C-146 -51.7 -73 -103.3 -13.1 -103.3C46.9 -103.3 93.8 -51.7 93.8 11.7"
+              fill="url(#colorGradientGreen)"
+              stroke="none"
+              opacity="1"
+            ></path>
+          </g>
+        </svg>
+
+        <div id="colorMenu" class="color_menu"></div>
+      </section>
     </main>
   </body>
 </html>

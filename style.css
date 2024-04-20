@@ -7,6 +7,70 @@ body {
   background-color: #333333;
 }
 
+body.green {
+  background-color: #333333;
+}
+body.green #blobOne {
+  fill: #b2bbaa;
+}
+body.green #blobThree {
+  fill: #c0c8ba;
+}
+body.green #blobFive {
+  fill: #9ca893;
+}
+body.green #colorFill {
+  fill: url(#colorGradientGreen);
+}
+
+body.blue {
+  background-color: #414356;
+}
+body.blue #blobOne {
+  fill: #8b8ea7;
+}
+body.blue #blobThree {
+  fill: #7c7f9c;
+}
+body.blue #blobFive {
+  fill: #a8aabd;
+}
+body.blue #colorFill {
+  fill: url(#colorGradientBlue);
+}
+
+body.red {
+  background-color: #574244;
+}
+body.red #blobOne {
+  fill: #9c7c7f;
+}
+body.red #blobThree {
+  fill: #916e71;
+}
+body.red #blobFive {
+  fill: #a78b8e;
+}
+body.red #colorFill {
+  fill: url(#colorGradientRed);
+}
+
+body.black {
+  background-color: #000000;
+}
+body.black #blobOne {
+  fill: #494949;
+}
+body.black #blobThree {
+  fill: #373737;
+}
+body.black #blobFive {
+  fill: #5b5b5b;
+}
+body.black #colorFill {
+  fill: url(#colorGradientBlack);
+}
+
 .page {
   height: 100vh;
   width: 100vw;
@@ -41,4 +105,36 @@ body {
 .letter {
   fill: #eaede8;
   opacity: 0.8;
+}
+
+.colorSection {
+  height: 15%;
+  min-height: 75px;
+  width: 15%;
+  min-width: 75px;
+  position: absolute;
+  right: 0;
+  bottom: 0;
+}
+
+.color_button_SVG,
+.color_fill_SVG {
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+#colorFill {
+  cursor: pointer;
+}
+
+.color_menu {
+  display: none;
+  position: absolute;
+  bottom: 0;
+  right: 0;
+}
+
+.color_option {
+  cursor: pointer;
 }
