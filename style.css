@@ -1,0 +1,44 @@
+* {
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  background-color: #333333;
+}
+
+.page {
+  height: 100vh;
+  width: 100vw;
+  position: relative;
+}
+
+.text_box {
+  height: 100%;
+  width: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+.blobSVG {
+  position: absolute;
+  top: 0;
+  left: 0;
+  opacity: 0.3;
+}
+
+#textSVG {
+  height: 100%;
+  width: 30%;
+  min-width: 300px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -55%);
+}
+
+.letter {
+  fill: #eaede8;
+  opacity: 0.8;
+}
