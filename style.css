@@ -72,7 +72,7 @@ body.black #colorFill {
 }
 
 .page {
-  height: 100vh;
+  height: 100dvh;
   width: 100vw;
   max-height: 100%;
   max-width: 100%;
@@ -109,7 +109,7 @@ body.black #colorFill {
   position: absolute;
   top: 50%;
   left: 50%;
-  transform: translate(-50%, -55%);
+  transform: translate(-50%, -50%);
 }
 
 .letter {
@@ -130,9 +130,9 @@ body.black #colorFill {
   bottom: 0;
   right: 0;
   height: 15%;
-  min-height: 75px;
+  min-height: 90px;
   width: 15%;
-  min-width: 75px;
+  min-width: 90px;
 }
 
 .color_button_SVG,
@@ -149,10 +149,10 @@ body.black #colorFill {
 .color_menu {
   display: none;
   position: absolute;
-  bottom: 75px;
-  right: 0;
+  bottom: 70px;
+  right: 4px;
   width: 15%;
-  min-width: 75px;
+  min-width: 80px;
 }
 
 .color_option {

@@ -28,6 +28,19 @@ const colorButtonTwo =
 const colorButtonThree =
   'M84.6 -45.2C104.2 -14.8 111 26.6 94.8 68.3C78.5 110 39.3 152 -12.8 159.4C-65 166.8 -129.9 139.7 -149.5 96C-169.2 52.3 -143.5 -7.8 -111 -45.6C-78.5 -83.3 -39.3 -98.7 -3.4 -96.7C32.5 -94.8 65 -75.5 84.6 -45.2';
 
+// Set color as default
+function setDefaultColor() {
+  const savedColor = localStorage.getItem('color');
+  if (!savedColor) {
+    localStorage.setItem('color', 'green');
+    document.body.classList.add('green');
+  } else {
+    document.body.classList.add(savedColor);
+  }
+}
+
+setDefaultColor();
+
 // Morph animations
 const morphOne = createMorphAnimation(blobOne, blobTwo, 40);
 const morphTwo = createMorphAnimation(blobThree, blobFour, 45);
@@ -110,26 +123,26 @@ letters.forEach((letter) => {
 });
 
 function createDrawStrokeAnimation(target, pathLength) {
-  return gsap
-    .timeline({ repeat: -1 })
+  const timeline = gsap.timeline({ repeat: -1 });
+
+  timeline
     .to(
       target,
       {
-        strokeDashoffset: 0,
-        duration: 2,
-        ease: 'power1.inOut',
+        strokeDashoffset: pathLength * 3,
+        duration: 8,
+        ease: 'sine.inOut',
       },
       '+=2'
     )
-    .to(
-      target,
-      {
-        strokeDashoffset: -pathLength,
-        duration: 2,
-        ease: 'power1.inOut',
-      },
-      '+=2'
-    );
+    .add(() => {
+      timeline.pause();
+      gsap.delayedCall(2, () => {
+        timeline.play();
+      });
+    }, 6);
+
+  return timeline;
 }
 
 function animateColorOption(colorOption) {
@@ -166,18 +179,29 @@ function closeMenu() {
   const colorOptions = document.querySelectorAll('.color_option');
 
   colorOptions.forEach((option, index) => {
-    gsap.to(option, { opacity: 0, duration: 0.3, delay: index * 0.4 });
+    gsap.to(option, {
+      opacity: 0,
+      duration: 0.1,
+      delay: index * 0.2,
+      ease: 'sine.out',
+    });
   });
-  gsap.to(colorMenu, { opacity: 0, duration: 1.8, display: 'none' });
-  gsap.to(colorButtonSVG, { opacity: 1, duration: 2, display: 'block' });
-  gsap.to(colorFillSVG, { opacity: 1, duration: 2, display: 'block' });
+  gsap.to(colorMenu, { opacity: 0, duration: 1, display: 'none' });
+  gsap.to(colorButtonSVG, { opacity: 1, duration: 1, display: 'block' });
+  gsap.to(colorFillSVG, { opacity: 1, duration: 1, display: 'block' });
 }
 
 function openMenu() {
   colorMenu.innerHTML = '';
+  const paths = [
+    'M153.3 -95.3C176.7 -48 158.5 16.5 126 56.4C93.5 96.3 46.8 111.7 -6.1 115.2C-58.9 118.7 -117.8 110.3 -134 79.8C-150.3 49.2 -123.8 -3.5 -94.4 -54.3C-65 -105.2 -32.5 -154.1 16.2 -163.5C65 -172.8 129.9 -142.7 153.3 -95.3',
+    'M118.1 -77.5C140.3 -29.7 136.8 23.7 112.9 70C88.9 116.3 44.5 155.7 -10.2 161.6C-65 167.5 -129.9 140 -146.1 98.1C-162.4 56.2 -129.9 0 -97.4 -53.8C-65 -107.5 -32.5 -158.8 7.7 -163.2C47.9 -167.7 95.8 -125.3 118.1 -77.5',
+    'M84.2 -60.8C103.4 -15.3 109.3 25.6 93 72.5C76.8 119.3 38.4 172.2 -3.9 174.4C-46.2 176.7 -92.4 128.3 -116.9 76.7C-141.5 25 -144.3 -30 -121.2 -77.7C-98.1 -125.3 -49.1 -165.7 -8.3 -160.9C32.5 -156.1 65 -106.2 84.2 -60.8',
+  ];
+
   colors.forEach((color) => {
     if (!body.classList.contains(color)) {
-      const colorOption = renderColorMenu(color);
+      const colorOption = renderColorMenu(color, paths);
       colorMenu.appendChild(colorOption);
       const pathElement = colorOption.querySelector('path');
       animateColorOption(pathElement);
@@ -190,20 +214,36 @@ function openMenu() {
   gsap.to(colorButtonSVG, { opacity: 0, display: 'none' });
   gsap.to(colorFillSVG, { opacity: 0, display: 'none' });
   reversedColorOptions.forEach((option, index) => {
-    gsap.to(option, { opacity: 0.7, duration: 0.5, delay: index * 0.3 });
+    gsap.to(option, {
+      opacity: 0.7,
+      duration: 0.5,
+      delay: index * 0.3,
+      ease: 'sine.in',
+    });
   });
 }
 
 export function changeColor(goGreen, goBlue, goRed, goBlack) {
   const body = document.body;
-  body.classList.remove('green', 'blue', 'red', 'black');
+  let selectedColor = '';
+
   if (goGreen) {
+    body.classList.remove('blue', 'red', 'black');
     body.classList.add('green');
+    selectedColor = 'green';
   } else if (goBlue) {
+    body.classList.remove('green', 'red', 'black');
     body.classList.add('blue');
+    selectedColor = 'blue';
   } else if (goRed) {
+    body.classList.remove('green', 'blue', 'black');
     body.classList.add('red');
+    selectedColor = 'red';
   } else if (goBlack) {
+    body.classList.remove('green', 'blue', 'red');
     body.classList.add('black');
+    selectedColor = 'black';
   }
+
+  localStorage.setItem('color', selectedColor);
 }
