@@ -1,6 +1,22 @@
 import { toggleColorMenu, changeColor } from './script.js';
 
+function shufflePaths(array) {
+  for (let i = array.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [array[i], array[j]] = [array[j], array[i]];
+  }
+  return array;
+}
+
 export default function renderColorMenu(color) {
+  const paths = [
+    'M153.3 -95.3C176.7 -48 158.5 16.5 126 56.4C93.5 96.3 46.8 111.7 -6.1 115.2C-58.9 118.7 -117.8 110.3 -134 79.8C-150.3 49.2 -123.8 -3.5 -94.4 -54.3C-65 -105.2 -32.5 -154.1 16.2 -163.5C65 -172.8 129.9 -142.7 153.3 -95.3',
+    'M118.1 -77.5C140.3 -29.7 136.8 23.7 112.9 70C88.9 116.3 44.5 155.7 -10.2 161.6C-65 167.5 -129.9 140 -146.1 98.1C-162.4 56.2 -129.9 0 -97.4 -53.8C-65 -107.5 -32.5 -158.8 7.7 -163.2C47.9 -167.7 95.8 -125.3 118.1 -77.5',
+    'M84.2 -60.8C103.4 -15.3 109.3 25.6 93 72.5C76.8 119.3 38.4 172.2 -3.9 174.4C-46.2 176.7 -92.4 128.3 -116.9 76.7C-141.5 25 -144.3 -30 -121.2 -77.7C-98.1 -125.3 -49.1 -165.7 -8.3 -160.9C32.5 -156.1 65 -106.2 84.2 -60.8',
+  ];
+
+  const shuffledPaths = shufflePaths(paths);
+
   const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
   svg.setAttribute('viewBox', '0 0 900 600');
   svg.setAttribute('width', '100%');
@@ -12,47 +28,36 @@ export default function renderColorMenu(color) {
 
   const path = document.createElementNS('http://www.w3.org/2000/svg', 'path');
   path.setAttribute('class', `color_option ${color}`);
-  path.setAttribute(
-    'd',
-    'M93.8 11.7C93.8 75 46.9 150 -13.1 150C-73 150 -146 75 -146 11.7C-146 -51.7 -73 -103.3 -13.1 -103.3C46.9 -103.3 93.8 -51.7 93.8 11.7'
-  );
+  path.setAttribute('d', shuffledPaths[0]);
 
-  if (color === 'black') {
-    const gradient = document.createElementNS(
-      'http://www.w3.org/2000/svg',
-      'radialGradient'
-    );
-    gradient.setAttribute('id', 'colorGradientBlackMenu');
-    const stop1 = document.createElementNS(
-      'http://www.w3.org/2000/svg',
-      'stop'
-    );
-    stop1.setAttribute('offset', '70%');
-    stop1.setAttribute('stop-color', '#000000');
-    stop1.setAttribute('stop-opacity', '0.8');
-    const stop2 = document.createElementNS(
-      'http://www.w3.org/2000/svg',
-      'stop'
-    );
-    stop2.setAttribute('offset', '100%');
-    stop2.setAttribute('stop-color', 'transparent');
-    stop2.setAttribute('stop-opacity', '0');
-    gradient.appendChild(stop1);
-    gradient.appendChild(stop2);
-    svg.appendChild(gradient);
-    path.setAttribute('fill', 'url(#colorGradientBlackMenu)');
-  } else {
-    path.setAttribute(
-      'fill',
-      `url(#colorGradient${color.charAt(0).toUpperCase() + color.slice(1)})`
-    );
+  switch (color) {
+    case 'green':
+      path.setAttribute('fill', '#b2bbaa');
+      break;
+    case 'blue':
+      path.setAttribute('fill', '#8b8ea7');
+      break;
+    case 'red':
+      path.setAttribute('fill', '#9c7c7f');
+      break;
+    case 'black':
+      path.setAttribute('fill', '#000000');
+      break;
   }
 
   path.setAttribute('stroke', 'none');
-  path.setAttribute('opacity', '1');
+  path.setAttribute('opacity', '0');
 
   g.appendChild(path);
   svg.appendChild(g);
+
+  svg.addEventListener('mouseenter', () => {
+    gsap.to(svg, { opacity: 1, duration: 0.5 });
+  });
+
+  svg.addEventListener('mouseleave', () => {
+    gsap.to(svg, { opacity: 0.7, duration: 0.5 });
+  });
 
   svg.addEventListener('click', () => {
     const goGreen = color === 'green';

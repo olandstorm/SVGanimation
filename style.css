@@ -74,10 +74,20 @@ body.black #colorFill {
 .page {
   height: 100vh;
   width: 100vw;
+  max-height: 100%;
+  max-width: 100%;
   position: relative;
 }
 
-.text_box {
+.background {
+  position: relative;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.text_section {
   height: 100%;
   width: 100%;
   position: absolute;
@@ -92,7 +102,7 @@ body.black #colorFill {
   opacity: 0.3;
 }
 
-#textSVG {
+.text_SVG {
   height: 100%;
   width: 30%;
   min-width: 300px;
@@ -107,14 +117,22 @@ body.black #colorFill {
   opacity: 0.8;
 }
 
-.colorSection {
+.color_section {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  left: 0;
+  top: 0;
+}
+
+.menu_button {
+  position: absolute;
+  bottom: 0;
+  right: 0;
   height: 15%;
   min-height: 75px;
   width: 15%;
   min-width: 75px;
-  position: absolute;
-  right: 0;
-  bottom: 0;
 }
 
 .color_button_SVG,
@@ -124,15 +142,17 @@ body.black #colorFill {
   left: 0;
 }
 
-#colorFill {
+.color_fill {
   cursor: pointer;
 }
 
 .color_menu {
   display: none;
   position: absolute;
-  bottom: 0;
+  bottom: 75px;
   right: 0;
+  width: 15%;
+  min-width: 75px;
 }
 
 .color_option {

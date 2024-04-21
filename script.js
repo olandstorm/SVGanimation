@@ -5,7 +5,6 @@ const colorFillSVG = document.querySelector('#colorFillSVG');
 const colorButton = document.querySelector('#colorButton');
 const colorFill = document.querySelector('#colorFill');
 const colorMenu = document.querySelector('#colorMenu');
-const colorOptions = document.querySelectorAll('.color_option');
 const body = document.body;
 const blobOne = document.querySelector('#blobOne');
 const blobThree = document.querySelector('#blobThree');
@@ -25,6 +24,9 @@ const letterO =
 
 const colorButtonTwo =
   'M129.3 -6.9C129.3 46.9 64.7 93.8 -5.2 93.8C-75 93.8 -150 46.9 -150 -6.9C-150 -60.7 -75 -121.3 -5.2 -121.3C64.7 -121.3 129.3 -60.7 129.3 -6.9';
+
+const colorButtonThree =
+  'M84.6 -45.2C104.2 -14.8 111 26.6 94.8 68.3C78.5 110 39.3 152 -12.8 159.4C-65 166.8 -129.9 139.7 -149.5 96C-169.2 52.3 -143.5 -7.8 -111 -45.6C-78.5 -83.3 -39.3 -98.7 -3.4 -96.7C32.5 -94.8 65 -75.5 84.6 -45.2';
 
 // Morph animations
 const morphOne = createMorphAnimation(blobOne, blobTwo, 40);
@@ -132,7 +134,7 @@ function createDrawStrokeAnimation(target, pathLength) {
 
 function animateColorOption(colorOption) {
   const duration = Math.random() * 4 + 5;
-  createMorphAnimation(colorOption, colorButtonTwo, duration);
+  createMorphAnimation(colorOption, colorButtonThree, duration);
 }
 
 function handleColorFillMouseEnter() {
@@ -159,30 +161,37 @@ export function toggleColorMenu() {
   } else {
     openMenu();
   }
+}
+function closeMenu() {
+  const colorOptions = document.querySelectorAll('.color_option');
 
-  function closeMenu() {
-    gsap.to(colorMenu, { opacity: 0, duration: 0.5, display: 'none' });
-    gsap.to(colorButtonSVG, { opacity: 1 });
-    gsap.to(colorFillSVG, { opacity: 1 });
-  }
+  colorOptions.forEach((option, index) => {
+    gsap.to(option, { opacity: 0, duration: 0.3, delay: index * 0.4 });
+  });
+  gsap.to(colorMenu, { opacity: 0, duration: 1.8, display: 'none' });
+  gsap.to(colorButtonSVG, { opacity: 1, duration: 2, display: 'block' });
+  gsap.to(colorFillSVG, { opacity: 1, duration: 2, display: 'block' });
+}
 
-  function openMenu() {
-    colorMenu.innerHTML = '';
-    colors.forEach((color) => {
-      if (!body.classList.contains(color)) {
-        const colorOption = renderColorMenu(color);
-        colorMenu.appendChild(colorOption);
-        const pathElement = colorOption.querySelector('path');
-        animateColorOption(pathElement);
-      }
-    });
-    gsap.to(colorMenu, { opacity: 1, duration: 0.5, display: 'block' });
-    gsap.to(colorButtonSVG, { opacity: 0 });
-    gsap.to(colorFillSVG, { opacity: 0 });
-    colorOptions.forEach((option, index) => {
-      gsap.to(option, { opacity: 1, duration: 0.5, delay: index * 0.1 });
-    });
-  }
+function openMenu() {
+  colorMenu.innerHTML = '';
+  colors.forEach((color) => {
+    if (!body.classList.contains(color)) {
+      const colorOption = renderColorMenu(color);
+      colorMenu.appendChild(colorOption);
+      const pathElement = colorOption.querySelector('path');
+      animateColorOption(pathElement);
+    }
+  });
+  const colorOptions = document.querySelectorAll('.color_option');
+  const reversedColorOptions = Array.from(colorOptions).reverse();
+
+  gsap.to(colorMenu, { opacity: 1, duration: 1, display: 'block' });
+  gsap.to(colorButtonSVG, { opacity: 0, display: 'none' });
+  gsap.to(colorFillSVG, { opacity: 0, display: 'none' });
+  reversedColorOptions.forEach((option, index) => {
+    gsap.to(option, { opacity: 0.7, duration: 0.5, delay: index * 0.3 });
+  });
 }
 
 export function changeColor(goGreen, goBlue, goRed, goBlack) {
